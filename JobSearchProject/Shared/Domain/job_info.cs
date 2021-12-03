@@ -10,7 +10,7 @@ namespace JobSearchProject.Shared.Domain
     {
         public virtual job_Category job_Category { get; set; }
         public virtual job_location job_location { get; set; }
-        public virtual company_info company_info { get; set; }
+        public virtual Company_info company_info { get; set; }
         public string job_title { get; set; }
         public string job_description { get; set; }
 
