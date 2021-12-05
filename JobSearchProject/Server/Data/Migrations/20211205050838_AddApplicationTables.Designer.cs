@@ -4,14 +4,16 @@ using JobSearchProject.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobSearchProject.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211205050838_AddApplicationTables")]
+    partial class AddApplicationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,26 +193,6 @@ namespace JobSearchProject.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "79b391df-bc2b-43fe-9c35-aacff0e62712",
-                            Email = "admin@localhost.com",
-                            EmailConfirmed = false,
-                            FirstName = "Admin",
-                            LastName = "User",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEG6RKd68T8L1ciwvZaTKZRbhH1fqFK5VNrqsZtP7B5DA119iaQXde+vzd9VLRhCkQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "4acf5224-53ce-456e-8b9b-7de9d89c766e",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("JobSearchProject.Shared.Domain.ApplicantDetail", b =>
@@ -293,32 +275,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Company_Infos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Tam str 88",
-                            Contact = 0,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 69, DateTimeKind.Local).AddTicks(3604),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(379),
-                            Mission = "To give you a job",
-                            Name = "ABC Company",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Tam str 58",
-                            Contact = 0,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(843),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(846),
-                            Mission = "To advance the world to a robotic age",
-                            Name = "ABC Company",
-                            UpdatedBy = "System"
-                        });
                 });
 
             modelBuilder.Entity("JobSearchProject.Shared.Domain.applicant_info", b =>
@@ -394,44 +350,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("job_Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1475),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1479),
-                            UpdatedBy = "System",
-                            category = "3 Series"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1510),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1511),
-                            UpdatedBy = "System",
-                            category = "X5"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1512),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1513),
-                            UpdatedBy = "System",
-                            category = "Prius"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1514),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(1515),
-                            UpdatedBy = "System",
-                            category = "Rav4"
-                        });
                 });
 
             modelBuilder.Entity("JobSearchProject.Shared.Domain.job_info", b =>
@@ -465,8 +383,8 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.Property<int?>("job_locationId")
                         .HasColumnType("int");
 
-                    b.Property<double>("job_salary")
-                        .HasColumnType("float");
+                    b.Property<float>("job_salary")
+                        .HasColumnType("real");
 
                     b.Property<string>("job_title")
                         .HasColumnType("nvarchar(max)");
@@ -486,34 +404,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.HasIndex("job_locationId");
 
                     b.ToTable("job_infos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(4305),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(4309),
-                            UpdatedBy = "System",
-                            job_description = "",
-                            job_salary = 0.0,
-                            job_title = "",
-                            no_of_vacancy = 0,
-                            type = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(4311),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 71, DateTimeKind.Local).AddTicks(4312),
-                            UpdatedBy = "System",
-                            job_description = "",
-                            job_salary = 0.0,
-                            job_title = "",
-                            no_of_vacancy = 0,
-                            type = ""
-                        });
                 });
 
             modelBuilder.Entity("JobSearchProject.Shared.Domain.job_location", b =>
@@ -541,26 +431,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("job_locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(9137),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(9143),
-                            UpdatedBy = "System",
-                            location_Name = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(9146),
-                            DateUpdated = new DateTime(2021, 12, 5, 14, 1, 4, 70, DateTimeKind.Local).AddTicks(9147),
-                            UpdatedBy = "System",
-                            location_Name = ""
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -588,22 +458,6 @@ namespace JobSearchProject.Server.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "22dc13e2-c447-46f1-9bd0-e5ccb4adf50c",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "38bee0e9-5c91-40b2-8f3a-b9951b9e577d",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -691,13 +545,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
-                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

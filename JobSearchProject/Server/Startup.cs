@@ -1,5 +1,7 @@
 using JobSearchProject.Server.Data;
+using JobSearchProject.Server.IRepository;
 using JobSearchProject.Server.Models;
+using JobSearchProject.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,8 @@ namespace JobSearchProject.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

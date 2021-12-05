@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.EntityFramework.Options;
+using JobSearchProject.Server.Configurations.Entities;
 using JobSearchProject.Server.Models;
 using JobSearchProject.Shared.Domain;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -25,5 +26,19 @@ namespace JobSearchProject.Server.Data
 
         public DbSet<applicant_info> applicant_Infos { get; set; }
         public DbSet<ApplicantDetail> ApplicantDetails{ get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new Company_infoSeedConfiguration());
+            builder.ApplyConfiguration(new job_locationSeedConfiguration());
+            builder.ApplyConfiguration(new job_CategorySeedConfiguration());
+            builder.ApplyConfiguration(new job_infoSeedConfiguration());
+
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+        }
+
     }
 }
