@@ -4,14 +4,16 @@ using JobSearchProject.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobSearchProject.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211202110827_addNametoUser")]
+    partial class addNametoUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,244 +195,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.ApplicantDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ApplicantId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Applicant_infoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Job_infoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeUpload")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Applicant_infoId");
-
-                    b.HasIndex("Job_infoId");
-
-                    b.ToTable("ApplicantDetails");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.Company_info", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Contact")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Mission")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Company_Infos");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.applicant_info", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("applicant_Contact")
-                        .HasColumnType("int");
-
-                    b.Property<string>("applicant_Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_qualification")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("applicant_salary")
-                        .HasColumnType("real");
-
-                    b.Property<string>("applicant_username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("applicant_Infos");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.job_Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("job_Categories");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.job_info", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("company_infoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("job_CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("job_description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("job_locationId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("job_salary")
-                        .HasColumnType("real");
-
-                    b.Property<string>("job_title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("no_of_vacancy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("company_infoId");
-
-                    b.HasIndex("job_CategoryId");
-
-                    b.HasIndex("job_locationId");
-
-                    b.ToTable("job_infos");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.job_location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("location_Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("job_locations");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -564,42 +328,6 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.ApplicantDetail", b =>
-                {
-                    b.HasOne("JobSearchProject.Shared.Domain.applicant_info", "Applicant_info")
-                        .WithMany()
-                        .HasForeignKey("Applicant_infoId");
-
-                    b.HasOne("JobSearchProject.Shared.Domain.job_info", "Job_info")
-                        .WithMany()
-                        .HasForeignKey("Job_infoId");
-
-                    b.Navigation("Applicant_info");
-
-                    b.Navigation("Job_info");
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.job_info", b =>
-                {
-                    b.HasOne("JobSearchProject.Shared.Domain.Company_info", "company_info")
-                        .WithMany()
-                        .HasForeignKey("company_infoId");
-
-                    b.HasOne("JobSearchProject.Shared.Domain.job_Category", "job_Category")
-                        .WithMany()
-                        .HasForeignKey("job_CategoryId");
-
-                    b.HasOne("JobSearchProject.Shared.Domain.job_location", "job_location")
-                        .WithMany()
-                        .HasForeignKey("job_locationId");
-
-                    b.Navigation("company_info");
-
-                    b.Navigation("job_Category");
-
-                    b.Navigation("job_location");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

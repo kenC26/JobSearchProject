@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearchProject.Server", "JobSearchProject\Server\JobSearchProject.Server.csproj", "{1D8A13F3-0352-41CE-AD35-9279EECA04DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobSearchProject.Server", "JobSearchProject\Server\JobSearchProject.Server.csproj", "{1D8A13F3-0352-41CE-AD35-9279EECA04DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearchProject.Client", "JobSearchProject\Client\JobSearchProject.Client.csproj", "{3FBBBA07-CFFD-4688-9792-63CAEB814AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobSearchProject.Client", "JobSearchProject\Client\JobSearchProject.Client.csproj", "{3FBBBA07-CFFD-4688-9792-63CAEB814AD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearchProject.Shared", "JobSearchProject\Shared\JobSearchProject.Shared.csproj", "{27213E21-AEF9-4DB2-A281-3685542CD5BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobSearchProject.Shared", "JobSearchProject\Shared\JobSearchProject.Shared.csproj", "{27213E21-AEF9-4DB2-A281-3685542CD5BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5A27C9B-3972-403E-B3F6-3B9C4EE8A615}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
