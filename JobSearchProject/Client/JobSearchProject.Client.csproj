@@ -26,8 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\images\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="Pages\Company_infos\" />
+    <Folder Include="Pages\job_Categorys\" />
+    <Folder Include="Pages\job_infos\" />
+    <Folder Include="Pages\job_locations\" />
   </ItemGroup>
 
 </Project>
