@@ -17,9 +17,9 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new Company_info
                 {
                     Id = 1,
-                    Name = "ABC Company",
-                    Address = "Tam str 88",
-                    Mission = "To give you a job",
+                    Name = "OCBC",
+                    Address = "North Bridge Road",
+                    Mission = "provides innovative financial services that meet their needs",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
@@ -28,9 +28,20 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new Company_info
                 {
                     Id = 2,
-                    Name = "ABC Company",
-                    Address = "Tam str 58",
-                    Mission = "To advance the world to a robotic age",
+                    Name = "TECHTIMIA ENGINEERING PTE LTD",
+                    Address = "1 TAMPINES NORTH DRIVE",
+                    Mission = "Provide Our Clients with Valued Added Services and Solutions",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+                },
+                new Company_info
+                {
+                    Id = 3,
+                    Name = "kHOO TECH PUAT",
+                    Address = "90 Yishun Central",
+                    Mission = "Provide good quality, affordable and hassle-free healthcare ",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",

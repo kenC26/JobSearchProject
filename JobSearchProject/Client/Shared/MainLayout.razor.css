@@ -2,9 +2,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background-image: url("meetingroom.jpg");
-    background-size:100%;
-    background-repeat:no-repeat;
 }
 
 .main {
@@ -71,4 +68,5 @@
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+
 }

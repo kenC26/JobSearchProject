@@ -4,15 +4,15 @@
 @attribute [Authorize]
 @using JobSearchProject.Shared.Domain
 
-<h3 class="card-title">Job Infromation</h3>
+<h3 class="card-title">Job Information</h3>
 
 @if (job_infos == null)
 {
-<div class="alert alert-info">Loading job_infos....</div>
+<div class="alert alert-info">Loading job infos....</div>
 }
 else
             {
-                <table cless="table table-responsive">
+                <table class="table table-responsive">
                     <thead>
                         <tr>
                             <th>Job Title</th>

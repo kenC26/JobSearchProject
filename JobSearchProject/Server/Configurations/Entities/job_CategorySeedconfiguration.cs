@@ -17,7 +17,7 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new job_Category
                 {
                     Id = 1,
-                    category = "3 Series",
+                    category = "Engineering",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
@@ -26,7 +26,7 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new job_Category
                 {
                     Id = 2,
-                    category = "X5",
+                    category = "Business",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
@@ -35,21 +35,13 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new job_Category
                 {
                     Id = 3,
-                    category = "Prius",
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
-                },
-                new job_Category
-                {
-                    Id = 4,
-                    category = "Rav4",
+                    category = "Healthcare",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
                     UpdatedBy = "System"
                 }
+                
             );
 
         }

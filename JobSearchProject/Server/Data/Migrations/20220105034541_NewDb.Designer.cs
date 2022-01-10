@@ -4,14 +4,16 @@ using JobSearchProject.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobSearchProject.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220105034541_NewDb")]
+    partial class NewDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +199,7 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4407628f-61c0-4bad-afe6-e6037dd71d8b",
+                            ConcurrencyStamp = "1218b220-28f8-4825-8240-caa64b554572",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -205,9 +207,9 @@ namespace JobSearchProject.Server.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKspevDVzf3mBzv5vg5CAYnasa5v88MPlxnXFlINB7WqAR2sSbE0i85JxNqiJTDE7w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECwDR6OpkWhodbjkpfUUf9t689cZI82VWd7RZZF0RlIifOBoVeAa7Ys9gDp7mAdxuw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1a7f5cd4-1f7a-4249-8cc3-68535e22a2c5",
+                            SecurityStamp = "fbb14467-6067-409b-9917-dddaf1a440e6",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -298,37 +300,25 @@ namespace JobSearchProject.Server.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "North Bridge Road",
+                            Address = "Tam str 88",
                             Contact = 0,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 593, DateTimeKind.Local).AddTicks(3120),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 595, DateTimeKind.Local).AddTicks(7563),
-                            Mission = "provides innovative financial services that meet their needs",
-                            Name = "OCBC",
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 292, DateTimeKind.Local).AddTicks(2132),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 295, DateTimeKind.Local).AddTicks(4838),
+                            Mission = "To give you a job",
+                            Name = "ABC Company",
                             UpdatedBy = "System"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "1 TAMPINES NORTH DRIVE",
+                            Address = "Tam str 58",
                             Contact = 0,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 596, DateTimeKind.Local).AddTicks(372),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 596, DateTimeKind.Local).AddTicks(385),
-                            Mission = "Provide Our Clients with Valued Added Services and Solutions",
-                            Name = "TECHTIMIA ENGINEERING PTE LTD",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "90 Yishun Central",
-                            Contact = 0,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 596, DateTimeKind.Local).AddTicks(389),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 596, DateTimeKind.Local).AddTicks(391),
-                            Mission = "Provide good quality, affordable and hassle-free healthcare ",
-                            Name = "kHOO TECH PUAT",
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 295, DateTimeKind.Local).AddTicks(7276),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 295, DateTimeKind.Local).AddTicks(7290),
+                            Mission = "To advance the world to a robotic age",
+                            Name = "ABC Company",
                             UpdatedBy = "System"
                         });
                 });
@@ -412,28 +402,37 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 599, DateTimeKind.Local).AddTicks(6290),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 599, DateTimeKind.Local).AddTicks(6305),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7562),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7574),
                             UpdatedBy = "System",
-                            category = "Engineering"
+                            category = "3 Series"
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 599, DateTimeKind.Local).AddTicks(6312),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 599, DateTimeKind.Local).AddTicks(6314),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7580),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7582),
                             UpdatedBy = "System",
-                            category = "Business"
+                            category = "X5"
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 599, DateTimeKind.Local).AddTicks(6317),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 599, DateTimeKind.Local).AddTicks(6319),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7585),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7587),
                             UpdatedBy = "System",
-                            category = "Healthcare"
+                            category = "Prius"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7590),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(7592),
+                            UpdatedBy = "System",
+                            category = "Rav4"
                         });
                 });
 
@@ -495,8 +494,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 600, DateTimeKind.Local).AddTicks(5407),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 600, DateTimeKind.Local).AddTicks(5422),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 299, DateTimeKind.Local).AddTicks(6177),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 299, DateTimeKind.Local).AddTicks(6191),
                             UpdatedBy = "System",
                             job_description = "",
                             job_salary = 0.0,
@@ -508,8 +507,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 600, DateTimeKind.Local).AddTicks(5429),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 600, DateTimeKind.Local).AddTicks(5431),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 299, DateTimeKind.Local).AddTicks(6200),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 299, DateTimeKind.Local).AddTicks(6202),
                             UpdatedBy = "System",
                             job_description = "",
                             job_salary = 0.0,
@@ -550,8 +549,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 598, DateTimeKind.Local).AddTicks(8642),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 598, DateTimeKind.Local).AddTicks(8673),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(793),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(820),
                             UpdatedBy = "System",
                             location_Name = ""
                         },
@@ -559,8 +558,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 10, 16, 16, 31, 598, DateTimeKind.Local).AddTicks(8680),
-                            DateUpdated = new DateTime(2022, 1, 10, 16, 16, 31, 598, DateTimeKind.Local).AddTicks(8682),
+                            DateCreated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(827),
+                            DateUpdated = new DateTime(2022, 1, 5, 11, 45, 40, 298, DateTimeKind.Local).AddTicks(829),
                             UpdatedBy = "System",
                             location_Name = ""
                         });
@@ -596,14 +595,14 @@ namespace JobSearchProject.Server.Data.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "b3c56482-dcf9-4143-862a-842069ebbf67",
+                            ConcurrencyStamp = "2b6c17eb-311d-4dc0-b8c4-75637340c9b7",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "59db5682-6b0d-410a-b78f-ece975a2687e",
+                            ConcurrencyStamp = "48bf8593-258e-4264-98c3-1e7da4fb14a1",
                             Name = "User",
                             NormalizedName = "USER"
                         });
