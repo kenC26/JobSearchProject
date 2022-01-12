@@ -1,0 +1,76 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@applicantDetails" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+
+        <div class="form-group">
+            <label>Upload On: </label>
+            <div>
+                <InputDate @bind-Value="@applicantDetails.TimeUpload" class="form-control" />
+                <ValidationMessage For="@(() => applicantDetails.TimeUpload)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Vehicle: </label>
+            <div>
+                <InputSelect @bind-Value="applicantDetails.Applicant_info" class="form-control">
+                    <option value="">-- Select Vehicle --</option>
+                    @if (applicant_infos != null)
+                    {
+                        foreach (var applicant_Info in applicant_infos)
+                        {
+                            <option value="@applicant_Info.Id">@applicant_Info.applicant_Name - @applicant_Info.applicant_Contact </option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => applicantDetails.Applicant_info)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Customer: </label>
+            <div>
+                <InputSelect @bind-Value="applicantDetails.Job_info" class="form-control">
+                    <option value="">-- Select Customer --</option>
+                    @if (job_infos != null)
+                    {
+                        foreach (var customer in job_infos)
+                        {
+                            <option value="@customer.Id">@customer.job_title </option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => applicantDetails.Job_info)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="applicantDetails" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public ApplicantDetail applicantDetails { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<job_info> job_infos;
+    private IList<applicant_info> applicant_infos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
+        applicant_infos = await _client.GetFromJsonAsync<List<applicant_info>>($"{Endpoints.Applicant_infosEndpoint}");
+        //applicantDetail.DateOut = DateTime.Now;
+    }
+}

@@ -16,7 +16,7 @@ namespace JobSearchProject.Shared.Domain
 
         public string type { get; set; }
 
-        public double job_salary { get; set; }
+        public string job_salary { get; set; }
 
         public int no_of_vacancy { get; set; }
     }

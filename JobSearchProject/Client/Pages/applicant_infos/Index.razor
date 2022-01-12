@@ -1,0 +1,93 @@
+﻿@page "/applicant_infos/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+<h3 class="card-title">Car applicant_infos</h3>
+<br />
+
+<a href="/applicant_infos/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New applicant_info
+</a>
+<br />
+<br />
+
+@if (applicant_infos == null)
+{
+    <div class="alert alert-info">Loading applicant_infos...</div>
+}
+else
+{
+<table class="table table-responsive" id="applicant_infosTable">
+    <thead>
+        <tr>
+            <th>Applicant Id</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Contect Number</th>
+            <th>Email</th>
+            <th>Qualification</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var applicant_info in applicant_infos)
+        {
+        <tr>
+            <td>@applicant_info.Id</td>
+            <td>@applicant_info.applicant_Name</td>
+            <td>@applicant_info.applicant_Gender</td>
+            <td>@applicant_info.applicant_Contact</td>
+            <td>@applicant_info.applicant_email</td>
+            <td>@applicant_info.applicant_qualification</td>
+            <td>@applicant_info.applicant_salary</td>
+            <td>
+                <a href="/applicant_infos/view/@applicant_info.Id" class="btn btn-primary">
+                    <span class="oi oi-book"></span>
+                </a>
+                <a href="/applicant_infos/edit/@applicant_info.Id" class="btn btn-warning">
+                    <span class="oi oi-pencil"></span>
+                </a>
+                <button class="btn btn-danger" @onclick="@(()=>Delete(applicant_info.Id))">
+                    <span class="oi oi-delete"></span>
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+
+
+@code {
+    private List<applicant_info> applicant_infos;
+    private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
+
+    protected async override Task OnInitializedAsync()
+    {
+        applicant_infos = await _client.GetFromJsonAsync<List<applicant_info>>($"{Endpoints.Applicant_infosEndpoint}");
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#applicant_infosTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#applicant_infosTable");
+    }
+
+    async Task Delete(int applicant_infoId)
+    {
+        var applicant_info = applicant_infos.First(q => q.Id == applicant_infoId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {applicant_info.Id}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.Applicant_infosEndpoint}/{applicant_infoId}");
+            await OnInitializedAsync();
+        }
+    }
+
+
+}

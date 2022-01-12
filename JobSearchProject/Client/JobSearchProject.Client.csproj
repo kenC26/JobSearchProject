@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="Pages\Company_infos\" />
     <Folder Include="Pages\job_Categorys\" />
-    <Folder Include="Pages\job_infos\" />
     <Folder Include="Pages\job_locations\" />
   </ItemGroup>
 

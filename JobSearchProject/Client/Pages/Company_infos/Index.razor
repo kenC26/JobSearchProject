@@ -2,49 +2,56 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
-@using JobSearchProject.Shared.Domain
+
 
 <h3 class="card-title">Company Information</h3>
+<br />
 
+<a href="/Company_infos/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Company
+</a>
+<br />
+<br />
 @if (Company_infos == null)
 {
-<div class="alert alert-info">Loading Company infos....</div>
+    <div class="alert alert-info">Loading Company infos....</div>
 }
 else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Company_info in Company_infos)
             {
-                <table cless="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>Address</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var Company_info in Company_infos)
-                {
-                        <tr>
-                            <td>@Company_info.Name</td>
-                            <td>@Company_info.Contact</td>
-                            <td>@Company_info.Address</td>
-                            <td>
-                                <a href="/Company_infos/view/@Company_info.Id" class="btn btn-primary">
-                                    <span class="oi oi-book"></span>
-                                </a>
-                                <a href="/Company_infos/view/@Company_info.Id" class="btn btn-warning">
-                                    <span class="oi oi-pencil"></span>
-                                </a>
-                                <button class="btn btn-danger" @onclick="@(()=>Delete(Company_info.Id))">
-                                    <span class="oi oi-delete"></span>
-                                </button>
-                            </td>
-                        </tr>
-                }
-                    </tbody>
-
-                </table>
+                <tr>
+                    <td>@Company_info.Name</td>
+                    <td>@Company_info.Contact</td>
+                    <td>@Company_info.Address</td>
+                    <td>
+                        <a href="/Company_infos/view/@Company_info.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Company_infos/edit/@Company_info.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Company_info.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
+        </tbody>
+
+    </table>
+}
 @code {
     private List<Company_info> Company_infos;
 

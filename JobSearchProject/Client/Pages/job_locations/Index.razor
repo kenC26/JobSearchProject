@@ -2,45 +2,53 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
-@using JobSearchProject.Shared.Domain
 
-<h3 class="card-title">Car job_locations</h3>
+
+<h3 class="card-title">Car job Region</h3>
+<br />
+
+<a href="/job_locations/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Region
+</a>
+<br />
+<br />
 
 @if (job_locations == null)
 {
-<div class="alert alert-info">Loading job_locations....</div>
+    <div class="alert alert-info">Loading job_locations....</div>
 }
 else
+{
+    <table class="table table-responsive">
+        <thread>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thread>
+        <tbody>
+            @foreach (var job_location in job_locations)
             {
-                <table cless="table table-responsive">
-                    <thread>
-                        <tr>
-                            <th>Name</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thread>
-                    <tbody>
-                        @foreach (var job_location in job_locations)
-                {
-                    <tr>
-                        <td>@job_location.location_Name</td>
-                        <td>
-                            <a href="/job_locations/view/@job_location.Id" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/job_locations/view/@job_location.Id" class="btn btn-warning">
-                                <span class="oi oi-pencil"></span>
-                            </a>
-                            <button class="btn btn-danger" @onclick="@(()=>Delete(job_location.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
-                        </td>
-                    </tr>
-                }
-                    </tbody>
-
-                </table>
+                <tr>
+                    <td>@job_location.location_Name</td>
+                    <td>
+                        <a href="/job_locations/view/@job_location.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/job_locations/edit/@job_location.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(job_location.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
+        </tbody>
+
+    </table>
+}
 @code {
     private List<job_location> job_locations;
 

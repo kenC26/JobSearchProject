@@ -1,0 +1,17 @@
+﻿@page "/job_Categorys/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View job_Category</h3>
+
+<FormComponent job_Categorys="job_Categorys" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    job_Category job_Categorys = new job_Category();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        job_Categorys = await _client.GetFromJsonAsync<job_Category>($"{Endpoints.Job_CategorysEndpoint}/{id}");
+    }
+}

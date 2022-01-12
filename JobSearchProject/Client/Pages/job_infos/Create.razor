@@ -1,0 +1,19 @@
+﻿@page "/job_infos/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Regions</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create job_info" job_infos="job_infos" OnValidSubmit="@Createjob_info" />
+
+@code {
+    job_info job_infos = new job_info();
+
+    private async Task Createjob_info()
+    {
+        await _client.PostAsJsonAsync(Endpoints.Job_infosEndpoint, job_infos);
+        _navManager.NavigateTo("/job_infos/");
+    }
+}

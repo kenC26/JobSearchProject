@@ -1,0 +1,30 @@
+﻿@page "/applicantDetails/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New applicantDetail</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create applicantDetail" applicantDetails="applicantDetails" OnValidSubmit="@CreateapplicantDetail" />
+
+@code {
+    ApplicantDetail applicantDetails = new ApplicantDetail();
+
+    private IList<job_info> job_infos;
+    private IList<applicant_info> applicant_infos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
+        applicant_infos = await _client.GetFromJsonAsync<List<applicant_info>>($"{Endpoints.Applicant_infosEndpoint}");
+
+        //applicantDetail.DateOut = DateTime.Now;
+    }
+
+    private async Task CreateapplicantDetail()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ApplicantDetailsEndpoint, applicantDetails);
+        _navManager.NavigateTo("/applicantDetails/");
+    }
+}

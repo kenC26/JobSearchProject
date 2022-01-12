@@ -1,0 +1,23 @@
+﻿@page "/job_Categorys/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit job_Category</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="Editjob_Category" job_Categorys="job_Categorys" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    job_Category job_Categorys = new job_Category();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        job_Categorys = await _client.GetFromJsonAsync<job_Category>($"{Endpoints.Job_CategorysEndpoint}/{id}");
+    }
+
+    async Task Editjob_Category()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.Job_CategorysEndpoint}/{id}", job_Categorys);
+        _navManager.NavigateTo("/job_Categorys/");
+    }
+}

@@ -12,7 +12,7 @@ namespace JobSearchProject.Shared.Domain
         public string Address { get; set; }
 
         public string Mission { get; set; }
-        public int Contact { get; set; }
+        public string Contact { get; set; }
 
     }
 }

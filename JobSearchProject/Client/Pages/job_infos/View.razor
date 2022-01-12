@@ -1,0 +1,17 @@
+﻿@page "/job_infos/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View job_info</h3>
+
+<FormComponent job_infos="job_infos" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    job_info job_infos = new job_info();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        job_infos = await _client.GetFromJsonAsync<job_info>($"{Endpoints.Job_infosEndpoint}/{id}");
+    }
+}

@@ -12,10 +12,10 @@ namespace JobSearchProject.Shared.Domain
         
         public string applicant_Name { get; set; }
         public string applicant_Gender { get; set; }
-        public int applicant_Contact { get; set; }
+        public string applicant_Contact { get; set; }
         public string applicant_email{ get; set; }
         public string applicant_qualification { get; set; }
-        public float applicant_salary { get; set; }
+        public string applicant_salary { get; set; }
         public string applicant_username { get; set; }
         public string applicant_password { get; set; }
 
