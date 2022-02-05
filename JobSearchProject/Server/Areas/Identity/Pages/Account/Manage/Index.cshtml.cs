@@ -33,9 +33,30 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Full name")]
+            public string Name { get; set; }
+
+            [Required]
+            [Display(Name = "Birth Date")]
+            [DataType(DataType.Date)]
+            public DateTime DOB { get; set; }
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Qualification")]
+            public string qualification { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Salary")]
+            public string salary { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -47,7 +68,12 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                Name = user.Name,
+                DOB = user.DOB,
+                PhoneNumber = phoneNumber,
+                Gender = user.Gender,
+                qualification = user.qualification,
+                salary = user.salary
             };
         }
 
@@ -87,6 +113,14 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            if (Input.Name != user.Name){user.Name = Input.Name;}
+            if (Input.DOB != user.DOB){user.DOB = Input.DOB;}
+            if (Input.DOB != user.DOB) { user.DOB = Input.DOB; }
+            if (Input.Gender != user.Gender) { user.Gender = Input.Gender; }
+            if (Input.qualification != user.qualification) { user.qualification = Input.qualification; }
+            if (Input.salary != user.salary) { user.salary = Input.salary; }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

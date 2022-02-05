@@ -15,5 +15,6 @@ namespace JobSearchProject.Client.Static
         public static readonly string Applicant_infosEndpoint = $"{Prefix}/applicant_infos";
         public static readonly string ApplicantDetailsEndpoint = $"{Prefix}/ApplicantDetails";
         public static readonly string Company_infosEndpoint = $"{Prefix}/Company_infos";
+        public static readonly string AccountsEndpoint = $"{Prefix}/accounts";
     }
 }

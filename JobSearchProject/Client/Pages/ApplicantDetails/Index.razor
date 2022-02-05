@@ -65,15 +65,6 @@ else
     {
         applicantDetails = await _client.GetFromJsonAsync<List<ApplicantDetail>>($"{Endpoints.ApplicantDetailsEndpoint}");
     }
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        await js.InvokeVoidAsync("AddDataTable", "#applicantDetailsTable");
-    }
-
-    public void Dispose()
-    {
-        js.InvokeVoidAsync("DataTablesDispose", "#applicantDetailsTable");
-    }
 
     async Task Delete(int applicantDetailId)
     {
@@ -85,6 +76,14 @@ else
             await OnInitializedAsync();
         }
     }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#applicantDetailsTable");
+    }
 
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#applicantDetailsTable");
+    }
 
 }
