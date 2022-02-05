@@ -35,7 +35,7 @@ namespace JobSearchProject.Server.Controllers
         //public async Task<ActionResult<IEnumerable<ApplicantDetail>>> GetApplicantDetails()
         public async Task<IActionResult> GetApplicantDetails()
         {
-            var ApplicantDetails = await _unitOfWork.ApplicantDetails.GetAll();
+            var ApplicantDetails = await _unitOfWork.ApplicantDetails.GetAll(includes: q => q.Include(x =>x.Job_info));
             return Ok(ApplicantDetails);
             //return await _context.ApplicantDetails.ToListAsync();
         }

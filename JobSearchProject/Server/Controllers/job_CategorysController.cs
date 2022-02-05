@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JobSearchProject.Server.Data;
 using JobSearchProject.Shared.Domain;
 using JobSearchProject.Server.IRepository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobSearchProject.Server.Controllers
 {
@@ -58,6 +59,7 @@ namespace JobSearchProject.Server.Controllers
 
         // PUT: api/job_Categorys/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Administrator,Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Putjob_Category(int id, job_Category job_Category)
         {
@@ -90,6 +92,7 @@ namespace JobSearchProject.Server.Controllers
 
         // POST: api/job_Categorys
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Administrator,Admin")]
         [HttpPost]
         public async Task<ActionResult<job_Category>> Postjob_Category(job_Category job_Category)
         {
@@ -102,6 +105,7 @@ namespace JobSearchProject.Server.Controllers
         }
 
         // DELETE: api/job_Categorys/5
+        [Authorize(Roles = "Administrator,Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Deletejob_Category(int id)
         {

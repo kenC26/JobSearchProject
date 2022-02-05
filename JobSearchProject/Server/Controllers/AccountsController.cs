@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using JobSearchProject.Server.Data;
 using JobSearchProject.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalManagement.Server.Controllers
 {
+    [Authorize(Roles = "Administrator,Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase

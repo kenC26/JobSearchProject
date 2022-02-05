@@ -6,63 +6,59 @@
 
 <h3 class="card-title">Job Category</h3>
 <br />
-
-<a href="/job_Categorys/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Category
-</a>
+<AuthorizeView Roles="Administrator,Admin">
+    <a href="/job_Categorys/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Category
+    </a>
+</AuthorizeView>
 <br />
 <br />
 @if (job_Categorys == null)
 {
-    <div class="alert alert-info">Loading job_Categories....</div>
-}
-else
-{
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var job_Category in job_Categorys)
+<div class="alert alert-info">Loading job_Categories....</div> }
+            else
             {
-                <tr>
-                    <td>@job_Category.category</td>
-                    <td>
-                        <a href="/job_Categorys/view/@job_Category.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/job_Categorys/edit/@job_Category.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(job_Category.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-
-    </table>
-}
-@code {
-    private List<job_Category> job_Categorys;
-
-    protected async override Task OnInitializedAsync()
-    {
-        job_Categorys = await _client.GetFromJsonAsync<List<job_Category>>($"{Endpoints.Job_CategorysEndpoint}");
-    }
-    async Task Delete(int job_CategoryId)
-    {
-        var job_Category = job_Categorys.First(q => q.Id == job_CategoryId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {job_Category.category}?");
-        if (confirm)
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job_Category in job_Categorys)
         {
-            await _client.DeleteAsync($"{Endpoints.Job_CategorysEndpoint}/{job_CategoryId}");
-            await OnInitializedAsync();
-        }
-    }
-}
+<tr>
+    <td>@job_Category.category</td>
+    <td>
+        <a href="/job_Categorys/view/@job_Category.Id" class="btn btn-primary">
+            <span class="oi oi-book"></span>
+        </a>
+        <a href="/job_Categorys/edit/@job_Category.Id" class="btn btn-warning">
+            <span class="oi oi-pencil"></span>
+        </a>
+        <button class="btn btn-danger" @onclick="@(()=>Delete(job_Category.Id))">
+            <span class="oi oi-delete"></span>
+        </button>
+    </td>
+</tr>}
+    </tbody>
+
+</table>}
+@code { private List<job_Category> job_Categorys;
+
+            protected async override Task OnInitializedAsync()
+            {
+                job_Categorys = await _client.GetFromJsonAsync<List<job_Category>>($"{Endpoints.Job_CategorysEndpoint}");
+            }
+            async Task Delete(int job_CategoryId)
+            {
+                var job_Category = job_Categorys.First(q => q.Id == job_CategoryId);
+                var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {job_Category.category}?");
+                if (confirm)
+                {
+                    await _client.DeleteAsync($"{Endpoints.Job_CategorysEndpoint}/{job_CategoryId}");
+                    await OnInitializedAsync();
+                }
+            } }

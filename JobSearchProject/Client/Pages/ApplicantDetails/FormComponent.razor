@@ -1,50 +1,88 @@
 ﻿@inject HttpClient _client
-
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <EditForm Model="@applicantDetails" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <fieldset disabled="@Disabled">
-
+        <label>@_currentUserName</label>
         <div class="form-group">
-            <label>Upload On: </label>
+            <label>job_Category: </label>
             <div>
-                <InputDate @bind-Value="@applicantDetails.TimeUpload" class="form-control" />
-                <ValidationMessage For="@(() => applicantDetails.TimeUpload)" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Vehicle: </label>
-            <div>
-                <InputSelect @bind-Value="applicantDetails.Applicant_info" class="form-control">
-                    <option value="">-- Select Vehicle --</option>
-                    @if (applicant_infos != null)
+                <InputSelect @bind-Value="cat" class="form-control">
+                    <option value="">-- Select Category --</option>
+                    @if (job_Categorys != null)
                     {
-                        foreach (var applicant_Info in applicant_infos)
+                        foreach (var job_Category in job_Categorys)
                         {
-                            <option value="@applicant_Info.Id">@applicant_Info.applicant_Name - @applicant_Info.applicant_Contact </option>
+                            <option value="@job_Category.Id">@job_Category.category </option>
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => applicantDetails.Applicant_info)" />
+                <ValidationMessage For="@(() => cat)" />
             </div>
         </div>
 
         <div class="form-group">
-            <label>Customer: </label>
+            <label>Region: </label>
             <div>
-                <InputSelect @bind-Value="applicantDetails.Job_info" class="form-control">
+                <InputSelect @bind-Value="loc" class="form-control">
+                    <option value="">-- Select Region --</option>
+                    @if (job_locations != null)
+                    {
+                        foreach (var job_Location in job_locations)
+                        {
+                            <option value="@job_Location.Id">@job_Location.location_Name </option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => loc)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Company: </label>
+            <div>
+                <InputSelect @bind-Value="cam" class="form-control">
+                    <option value="">-- Select Company --</option>
+                    @if (Company_infos != null)
+                    {
+                        foreach (var Company_info in Company_infos)
+                        {
+                            if (Company_info.CreatedBy == _currentUserName)
+                            {
+                                <option value="@Company_info.Id">@Company_info.Name - @Company_info.Contact</option>
+                            }
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => cam)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Job Title: </label>
+            <div>
+                <InputSelect @bind-Value="applicantDetails.job_infoId" class="form-control">
                     <option value="">-- Select Customer --</option>
                     @if (job_infos != null)
                     {
-                        foreach (var customer in job_infos)
+                        foreach (var job_info in job_infos)
                         {
-                            <option value="@customer.Id">@customer.job_title </option>
+                            if (cat == job_info.job_CategoryId)
+                            {
+                                if (loc == job_info.job_locationId)
+                                {
+                                    if (cam == job_info.Company_infoId)
+                                    {
+                            <option value="@job_info.Id">@job_info.job_title </option>}
+                                    }
+                                }
+                            }
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => applicantDetails.Job_info)" />
+                <ValidationMessage For="@(() => applicantDetails.job_infoId)" />
             </div>
         </div>
     </fieldset>
@@ -64,13 +102,58 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
+    private IList<job_Category> job_Categorys;
+    private IList<job_location> job_locations;
+    private IList<Company_info> Company_infos;
     private IList<job_info> job_infos;
-    private IList<applicant_info> applicant_infos;
+
+    private List<AppUser> AppUsers;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private int loc;
+    private int cat;
+    private int cam;
+
+
+
 
     protected async override Task OnInitializedAsync()
     {
+
+        job_Categorys = await _client.GetFromJsonAsync<List<job_Category>>($"{Endpoints.Job_CategorysEndpoint}");
+        job_locations = await _client.GetFromJsonAsync<List<job_location>>($"{Endpoints.Job_locationsEndpoint}");
+        Company_infos = await _client.GetFromJsonAsync<List<Company_info>>($"{Endpoints.Company_infosEndpoint}");
+        //job_info.DateOut = DateTime.Now;
+
+        AppUsers = await
+_client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndpoint}");
+        var authState = await
+        AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                    if (claim.Type == "name")
+                    {
+                        _currentUserName = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
+
         job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
-        applicant_infos = await _client.GetFromJsonAsync<List<applicant_info>>($"{Endpoints.Applicant_infosEndpoint}");
         //applicantDetail.DateOut = DateTime.Now;
     }
 }

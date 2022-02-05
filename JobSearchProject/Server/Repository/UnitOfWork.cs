@@ -20,7 +20,7 @@ namespace JobSearchProject.Server.Repository
         private IGenericRepository<job_location> _job_locations;
         private IGenericRepository<job_Category> _job_Categorys;
         private IGenericRepository<Company_info> _Company_infos;
-        private IGenericRepository<applicant_info> _applicant_infos;
+
         private IGenericRepository<ApplicantDetail> _ApplicantDetails;
 
         private UserManager<ApplicationUser> _userManager;
@@ -41,8 +41,7 @@ namespace JobSearchProject.Server.Repository
             => _ApplicantDetails ??= new GenericRepository<ApplicantDetail>(_context);
         public IGenericRepository<Company_info> Company_infos
             => _Company_infos ??= new GenericRepository<Company_info>(_context);
-        public IGenericRepository<applicant_info> applicant_infos
-            => _applicant_infos ??= new GenericRepository<applicant_info>(_context);
+
 
 
         public void Dispose()

@@ -1,84 +1,123 @@
 ﻿@page "/job_infos/"
 @inject HttpClient _client
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
 
 <h3 class="card-title">Job Information</h3>
 <br />
+<AuthorizeView Roles="Administrator,Admin">
+    <a href="/job_infos/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Job
+    </a>
 
-<a href="/job_infos/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Job
-</a>
-<br />
-<br />
-@if (job_infos == null)
-{
-<div class="alert alert-info">Loading job infos....</div> }
-            else
+    </AuthorizeView>
+    <br />
+    <br />
+    @if (job_infos == null)
+    {
+        <div class="alert alert-info">Loading job infos....</div> }
+    else
+    {
+        <table class="table table-responsive" id="bookingsTable">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>description</th>
+                    <th>Salary</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Company Info</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job_info in job_infos)
+                {
+                    if (job_info.CreatedBy == _currentUserName)
+                    {
+                        <tr>
+                            <td>@job_info.job_title</td>
+                            <td>@job_info.job_description</td>
+                            <td>@job_info.job_salary</td>
+                            <td>@job_info.type</td>
+                            <td>@job_info.job_location.location_Name</td>
+                            <td>@job_info.job_Category.category</td>
+                            <td>@job_info.company_info.Name</td>
+                            <td>
+                                <a href="/job_infos/view/@job_info.Id" class="btn btn-primary">
+                                    <span class="oi oi-book"></span>
+                                </a>
+                                <a href="/job_infos/edit/@job_info.Id" class="btn btn-warning">
+                                    <span class="oi oi-pencil"></span>
+                                </a>
+                                <button class="btn btn-danger" @onclick="@(() => Delete(job_info.Id))">
+                                    <span class="oi oi-delete"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    @code { private List<job_info> job_infos;
+
+        private List<AppUser> AppUsers;
+        private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+        private string _currentUserId;
+        private string _currentUserName;
+
+        protected async override Task OnInitializedAsync()
+        {
+            job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
+
+            AppUsers = await
+    _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndpoint}");
+            var authState = await
+            AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            if (user.Identity.IsAuthenticated)
             {
-<table class="table table-responsive" id="bookingsTable">
-    <thead>
-        <tr>
-            <th>Job Title</th>
-            <th>description</th>
-            <th>Salary</th>
-            <th>Location</th>
-            <th>Category</th>
-            <th>Company Info</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var job_info in job_infos)
-        {
-<tr>
-    <td>@job_info.job_title</td>
-    <td>@job_info.job_description</td>
-    <td>@job_info.job_salary</td>
-    <td>@job_info.job_location</td>
-    <td>@job_info.job_Category</td>
-    <td>@job_info.company_info</td>
-    <td>
-        <a href="/job_infos/view/@job_info.Id" class="btn btn-primary">
-            <span class="oi oi-book"></span>
-        </a>
-        <a href="/job_infos/edit/@job_info.Id" class="btn btn-warning">
-            <span class="oi oi-pencil"></span>
-        </a>
-        <button class="btn btn-danger" @onclick="@(()=>Delete(job_info.Id))">
-            <span class="oi oi-delete"></span>
-        </button>
-    </td>
-</tr>
-}
-    </tbody>
+                _claims = user.Claims;
+                _currentUserName = user.Identity.Name;
+                if (_claims.Count() > 0)
+                {
+                    foreach (var claim in _claims)
+                    {
+                        if (claim.Type == "sub")
+                        {
+                            _currentUserId = claim.Value;
+                            continue;
+                        }
+                        if (claim.Type == "name")
+                        {
+                            _currentUserName = claim.Value;
+                            continue;
+                        }
+                    }
+                }
+            }
 
-</table>}
-@code { private List<job_info> job_infos;
 
-    protected async override Task OnInitializedAsync()
-    {
-        job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
-    }
-    async Task Delete(int job_infoId)
-    {
-        var job_info = job_infos.First(q => q.Id == job_infoId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {job_info.job_title}?");
-        if (confirm)
-        {
-            await _client.DeleteAsync($"{Endpoints.Job_infosEndpoint}/{job_infoId}");
-            await OnInitializedAsync();
         }
-    }
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        await js.InvokeVoidAsync("AddDataTable,#bookingsTable");
-    }
-    public void Dispose()
-    {
-        js.InvokeVoidAsync("DataTableDispose", "#bookingsTable");
-    }
+        async Task Delete(int job_infoId)
+        {
+            var job_info = job_infos.First(q => q.Id == job_infoId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {job_info.job_title}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.Job_infosEndpoint}/{job_infoId}");
+                await OnInitializedAsync();
+            }
+        }
+        public void Dispose()
+        {
+            js.InvokeVoidAsync("DataTableDispose", "#bookingsTable");
+        }
 
     }

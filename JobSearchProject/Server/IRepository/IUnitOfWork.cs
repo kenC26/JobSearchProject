@@ -11,7 +11,6 @@ namespace JobSearchProject.Server.IRepository
     {
         Task Save(HttpContext httpContext);
         IGenericRepository<ApplicantDetail> ApplicantDetails { get; }
-        IGenericRepository<applicant_info> applicant_infos { get; }
         IGenericRepository<Company_info> Company_infos { get; }
         IGenericRepository<job_info> job_infos { get; }
         IGenericRepository<job_location> job_locations { get; }

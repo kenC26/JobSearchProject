@@ -60,6 +60,10 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]
             public DateTime DOB { get; set; }
 
+            [Phone]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -88,8 +92,9 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Salary")]
             public string salary { get; set; }
-        }
+            public string Role { get; set; }
 
+        }
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -106,6 +111,8 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account
                     UserName = Input.Email, 
                     Email = Input.Email, 
                     Name = Input.Name,
+                    DOB = Input.DOB,
+                    PhoneNumber = Input.PhoneNumber,
                     Gender = Input.Gender,
                     qualification = Input.qualification,
                     salary = Input.salary
@@ -121,15 +128,26 @@ namespace JobSearchProject.Server.Areas.Identity.Pages.Account
                     {
                         await _roleManager.CreateAsync(new IdentityRole("Admin"));
                     }
-                    if (Input.Name =="Name")
+                    if (!await _roleManager.RoleExistsAsync("Administrator"))
                     {
-                        await _userManager.AddToRoleAsync(user, "Admin");
+                        await _roleManager.CreateAsync(new IdentityRole("Administrator"));
+                    }
+                    if (Input.Name == "Nam")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Administrator");
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, "User");
+                        if (Input.Role == "1")
+                        {
+                            await _userManager.AddToRoleAsync(user, "User");
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, "Admin");
+                        }
                     }
-                    
+
 
                     _logger.LogInformation("User created a new account with password.");
 

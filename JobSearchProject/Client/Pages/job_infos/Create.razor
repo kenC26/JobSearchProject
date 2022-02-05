@@ -11,6 +11,18 @@
 @code {
     job_info job_infos = new job_info();
 
+    private IList<job_Category> job_Categorys;
+    private IList<job_location> job_locations;
+    private IList<Company_info> Company_infos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        job_Categorys = await _client.GetFromJsonAsync<List<job_Category>>($"{Endpoints.Job_CategorysEndpoint}");
+        job_locations = await _client.GetFromJsonAsync<List<job_location>>($"{Endpoints.Job_locationsEndpoint}");
+        Company_infos = await _client.GetFromJsonAsync<List<Company_info>>($"{Endpoints.Company_infosEndpoint}");
+        //job_info.DateOut = DateTime.Now;
+    }
+
     private async Task Createjob_info()
     {
         await _client.PostAsJsonAsync(Endpoints.Job_infosEndpoint, job_infos);
