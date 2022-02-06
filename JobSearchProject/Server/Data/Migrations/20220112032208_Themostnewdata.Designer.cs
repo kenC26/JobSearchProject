@@ -4,14 +4,16 @@ using JobSearchProject.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobSearchProject.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220112032208_Themostnewdata")]
+    partial class Themostnewdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +199,7 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dee7ca4d-bee8-40d6-83f4-5ed9989ec4b5",
+                            ConcurrencyStamp = "d3c1e470-2951-4705-bc9f-8a6472775d75",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -205,9 +207,9 @@ namespace JobSearchProject.Server.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFDV2ZD9WByO0/nW7kj1hUbhxI3v3vKjOO5zLL47icWPmzCtuvsDRSBDjiVOdsi5lg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN1q3EC3ErnDPZHEM5vcjVr+S4oY4nD980Vmj+ihWWw0+PdiYdwS0Gk/ni687zk4Eg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5d875ca9-0cb9-4d9c-bec4-962cb1b8f6ce",
+                            SecurityStamp = "5a4f269f-54b3-435f-879b-e3091ebe04db",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -300,8 +302,8 @@ namespace JobSearchProject.Server.Data.Migrations
                             Id = 1,
                             Address = "North Bridge Road",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 136, DateTimeKind.Local).AddTicks(8714),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 139, DateTimeKind.Local).AddTicks(6461),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 526, DateTimeKind.Local).AddTicks(3341),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(5029),
                             Mission = "provides innovative financial services that meet their needs",
                             Name = "OCBC",
                             UpdatedBy = "System"
@@ -311,8 +313,8 @@ namespace JobSearchProject.Server.Data.Migrations
                             Id = 2,
                             Address = "1 TAMPINES NORTH DRIVE",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 139, DateTimeKind.Local).AddTicks(9114),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 139, DateTimeKind.Local).AddTicks(9127),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7208),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7218),
                             Mission = "Provide Our Clients with Valued Added Services and Solutions",
                             Name = "TECHTIMIA ENGINEERING PTE LTD",
                             UpdatedBy = "System"
@@ -322,8 +324,8 @@ namespace JobSearchProject.Server.Data.Migrations
                             Id = 3,
                             Address = "90 Yishun Central",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 139, DateTimeKind.Local).AddTicks(9134),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 139, DateTimeKind.Local).AddTicks(9136),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7222),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7224),
                             Mission = "Provide good quality, affordable and hassle-free healthcare ",
                             Name = "kHOO TECH PUAT",
                             UpdatedBy = "System"
@@ -409,8 +411,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 144, DateTimeKind.Local).AddTicks(3233),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 144, DateTimeKind.Local).AddTicks(3255),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9243),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9259),
                             UpdatedBy = "System",
                             category = "Engineering"
                         },
@@ -418,8 +420,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 144, DateTimeKind.Local).AddTicks(3264),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 144, DateTimeKind.Local).AddTicks(3266),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9267),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9271),
                             UpdatedBy = "System",
                             category = "Business"
                         },
@@ -427,8 +429,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 144, DateTimeKind.Local).AddTicks(3270),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 144, DateTimeKind.Local).AddTicks(3272),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9274),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9277),
                             UpdatedBy = "System",
                             category = "Healthcare"
                         });
@@ -492,8 +494,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 145, DateTimeKind.Local).AddTicks(5022),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 145, DateTimeKind.Local).AddTicks(5040),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9679),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9695),
                             UpdatedBy = "System",
                             job_description = "",
                             job_salary = "0.00",
@@ -505,8 +507,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 145, DateTimeKind.Local).AddTicks(5050),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 145, DateTimeKind.Local).AddTicks(5053),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9705),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9708),
                             UpdatedBy = "System",
                             job_description = "",
                             job_salary = "0.00",
@@ -547,8 +549,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 143, DateTimeKind.Local).AddTicks(1252),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 143, DateTimeKind.Local).AddTicks(1296),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1528),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1556),
                             UpdatedBy = "System",
                             location_Name = ""
                         },
@@ -556,8 +558,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 23, 36, 143, DateTimeKind.Local).AddTicks(1306),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 23, 36, 143, DateTimeKind.Local).AddTicks(1310),
+                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1564),
+                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1566),
                             UpdatedBy = "System",
                             location_Name = ""
                         });
@@ -593,14 +595,14 @@ namespace JobSearchProject.Server.Data.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "1c626135-6630-453c-906a-8e1604230ea2",
+                            ConcurrencyStamp = "657b853a-c570-4cfb-a569-b09c63187aa5",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "d235c57e-c4f4-4b16-a1b3-75cf18f3f62d",
+                            ConcurrencyStamp = "ec8e5e2a-219c-4bc1-980d-fe2b94cb8d2e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
