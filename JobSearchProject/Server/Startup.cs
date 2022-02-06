@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace JobSearchProject.Server
@@ -35,17 +37,30 @@ namespace JobSearchProject.Server
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //services.AddIdentityServer()
+            //.AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+.AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+    options.IdentityResources["openid"].UserClaims.Add("name");
+    options.ApiResources.Single().UserClaims.Add("name");
+    options.IdentityResources["openid"].UserClaims.Add("role");
+    options.ApiResources.Single().UserClaims.Add("role");
+});
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddControllersWithViews();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
+
+            services.AddControllersWithViews().AddNewtonsoftJson(op =>
+op.SerializerSettings.ReferenceLoopHandling =
+Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddRazorPages();
         }
 

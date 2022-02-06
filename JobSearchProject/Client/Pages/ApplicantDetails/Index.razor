@@ -1,10 +1,20 @@
 ﻿@page "/applicantDetails/"
 @inject HttpClient _client
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
 <h3 class="card-title">Job Applications</h3>
 <br />
+<AuthorizeView Roles="Administrator,User">
+    <a href="/applicantDetails/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New applicantDetail
+    </a>
+</AuthorizeView>
+    <br />
+    <br />
 
 <a href="/applicantDetails/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -13,78 +23,117 @@
 <br />
 <br />
 
-@if (applicantDetails == null)
-{
-    <div class="alert alert-info">Loading applicantDetails...</div>
-}
-else
-{
-<table class="table table-responsive" id="applicantDetailsTable">
-    <thead>
-        <tr>
-            <th>Applicant Id</th>
-            <th>Name</th>
-            <th>Posted On</th>
-            <th>Job Title</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var applicantDetail in applicantDetails)
+    @if (applicantDetails == null)
+    {
+        <div class="alert alert-info">Loading applicantDetails...</div>
+    }
+    else
+    {
+        <table class="table table-responsive" id="applicantDetailsTable">
+            <thead>
+                <tr>
+                    <th>Applicant Id</th>
+                    <th>Name</th>
+                    <th>Posted On</th>
+                    <th>Job Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var applicantDetail in applicantDetails)
+                    {
+
+                            if (applicantDetail.CreatedBy == _currentUserName)
+                            {
+
+                        <tr>
+                            <td>@applicantDetail.Id</td>
+                            <td>@_currentUserName</td>
+                            <td>@applicantDetail.DateCreated.Date.ToString("dd MMMM yyyy")</td>
+                            @*<td>@((applicantDetail.DateIn - applicantDetail.DateOut).TotalDays.ToString())</td>*@
+                            @*<td>@(applicantDetail.DateIn != nullDT ? (applicantDetail.DateIn - applicantDetail.DateOut).TotalDays.ToString() : "To Be Determined")</td>
+                    <td>@(applicantDetail.Date != null ? (applicantDetail.DateIn.Value - applicantDetail.DateOut).TotalDays.ToString() : "To Be Determined")</td>*@
+                            <td>@applicantDetail.Job_info.job_title</td>
+                            <td>
+                                <a href="/applicantDetails/view/@applicantDetail.Id" class="btn btn-primary">
+                                    <span class="oi oi-book"></span>
+                                </a>
+                                <a href="/applicantDetails/edit/@applicantDetail.Id" class="btn btn-warning">
+                                    <span class="oi oi-pencil"></span>
+                                </a>
+                                <button class="btn btn-danger" @onclick="@(() => Delete(applicantDetail.Id))">
+                                    <span class="oi oi-delete"></span>
+                                </button>
+                            </td>
+                        </tr>
+
+                            }
+
+                }
+                }
+            </tbody>
+        </table>
+    }
+
+
+    @code {
+        private List<ApplicantDetail> applicantDetails;
+        private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
+
+        private List<AppUser> AppUsers;
+        private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+        private string _currentUserId;
+        private string _currentUserName;
+
+
+        protected async override Task OnInitializedAsync()
         {
-        <tr>
-            <td>@applicantDetail.Id</td>
-            <td>@applicantDetail.Applicant_info.applicant_Name</td>
-            <td>@applicantDetail.DateCreated.Date.ToString("dd MMMM yyyy")</td>
-            @*<td>@((applicantDetail.DateIn - applicantDetail.DateOut).TotalDays.ToString())</td>*@
-            @*<td>@(applicantDetail.DateIn != nullDT ? (applicantDetail.DateIn - applicantDetail.DateOut).TotalDays.ToString() : "To Be Determined")</td>
-        <td>@(applicantDetail.Date != null ? (applicantDetail.DateIn.Value - applicantDetail.DateOut).TotalDays.ToString() : "To Be Determined")</td>*@
-            <td>@applicantDetail.Job_info.job_title</td>
-            <td>
-                <a href="/applicantDetails/view/@applicantDetail.Id" class="btn btn-primary">
-                    <span class="oi oi-book"></span>
-                </a>
-                <a href="/applicantDetails/edit/@applicantDetail.Id" class="btn btn-warning">
-                    <span class="oi oi-pencil"></span>
-                </a>
-                <button class="btn btn-danger" @onclick="@(()=>Delete(applicantDetail.Id))">
-                    <span class="oi oi-delete"></span>
-                </button>
-            </td>
-        </tr>
+            applicantDetails = await _client.GetFromJsonAsync<List<ApplicantDetail>>($"{Endpoints.ApplicantDetailsEndpoint}");
+
+            AppUsers = await
+    _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndpoint}");
+            var authState = await
+            AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            if (user.Identity.IsAuthenticated)
+            {
+                _claims = user.Claims;
+                _currentUserName = user.Identity.Name;
+                if (_claims.Count() > 0)
+                {
+                    foreach (var claim in _claims)
+                    {
+                        if (claim.Type == "sub")
+                        {
+                            _currentUserId = claim.Value;
+                            continue;
+                        }
+                        if (claim.Type == "name")
+                        {
+                            _currentUserName = claim.Value;
+                            continue;
+                        }
+                    }
+                }
+            }
+
+
         }
-    </tbody>
-</table>
-}
 
-
-@code {
-    private List<ApplicantDetail> applicantDetails;
-    private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
-
-    protected async override Task OnInitializedAsync()
-    {
-        applicantDetails = await _client.GetFromJsonAsync<List<ApplicantDetail>>($"{Endpoints.ApplicantDetailsEndpoint}");
-    }
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        await js.InvokeVoidAsync("AddDataTable", "#applicantDetailsTable");
-    }
-
-    public void Dispose()
-    {
-        js.InvokeVoidAsync("DataTablesDispose", "#applicantDetailsTable");
-    }
-
-    async Task Delete(int applicantDetailId)
-    {
-        var applicantDetail = applicantDetails.First(q => q.Id == applicantDetailId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {applicantDetail.Id}?");
-        if (confirm)
+        async Task Delete(int applicantDetailId)
         {
-            await _client.DeleteAsync($"{Endpoints.ApplicantDetailsEndpoint}/{applicantDetailId}");
-            await OnInitializedAsync();
+            var applicantDetail = applicantDetails.First(q => q.Id == applicantDetailId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {applicantDetail.Id}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.ApplicantDetailsEndpoint}/{applicantDetailId}");
+                await OnInitializedAsync();
+            }
         }
+
+        public void Dispose()
+        {
+            js.InvokeVoidAsync("DataTablesDispose", "#applicantDetailsTable");
+        }
+
     }
-
-
-}

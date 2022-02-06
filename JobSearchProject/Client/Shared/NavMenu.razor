@@ -1,4 +1,15 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+@inject HttpClient _client
+@attribute [Authorize]
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">MyCareerFuture</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -15,8 +26,10 @@
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All">
-                        <span class="oi oi-account-logout" aria-hidden="true"></span> LogOut
+                    <NavLink class="nav-link" href="#" @onclick="BeginSignOut"
+                             Match="NavLinkMatch.All">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span>
+                        Log out
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
@@ -45,46 +58,86 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/Company_infos">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Company Information
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/job_Categorys">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Job Category
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/job_infos">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Job Infomation
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/job_locations">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Job Region
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/applicantDetails">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Applicant
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/applicant_infos">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Applicant
-            </NavLink>
-        </li>
+        <AuthorizeView Roles="Administrator,User">
+            <li class="nav‐item px‐3">
+                <NavLink class="nav‐link" href="accounts/">
+                    <span class="oi oi-person" aria‐hidden="true"></span> Accounts
+                </NavLink>
+            </li>
+        </AuthorizeView>
+        <AuthorizeView Roles="Administrator,User">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/applicantDetails">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Applicant
+                </NavLink>
+            </li>
+        </AuthorizeView>
+        <AuthorizeView Roles="Administrator,Admin,User">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/job_Categorys">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Job Category
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/job_locations">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Job Region
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/Company_infos">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Company Information
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/job_infos">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Job Infomation
+                </NavLink>
+            </li>
+        </AuthorizeView>
     </ul>
 </div>
 
-@code {
-    private bool collapseNavMenu = true;
+@code { private bool collapseNavMenu = true;
+
+    private List<AppUser> AppUsers;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
+    private string _currentUserRole;
+    protected async override Task OnInitializedAsync()
+    {
+        AppUsers = await
+        _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndpoint}");
+        var authState = await
+        AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                    if (claim.Type == "name")
+                    {
+                        _currentUserName = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
+        if (_currentUserId != String.Empty)
+        {
+            _currentUserRole = await
+            _client.GetStringAsync($"{Endpoints.AccountsEndpoint}/{_currentUserId}");
+        }
+    }
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -92,4 +145,8 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-}
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    } }

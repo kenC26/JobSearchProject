@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JobSearchProject.Server.Data;
 using JobSearchProject.Shared.Domain;
 using JobSearchProject.Server.IRepository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobSearchProject.Server.Controllers
 {
@@ -58,6 +59,7 @@ namespace JobSearchProject.Server.Controllers
 
         // PUT: api/Company_infos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Administrator,Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCompany_info(int id, Company_info Company_info)
         {
@@ -90,6 +92,7 @@ namespace JobSearchProject.Server.Controllers
 
         // POST: api/Company_infos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Administrator,Admin")]
         [HttpPost]
         public async Task<ActionResult<Company_info>> PostCompany_info(Company_info Company_info)
         {
@@ -102,6 +105,7 @@ namespace JobSearchProject.Server.Controllers
         }
 
         // DELETE: api/Company_infos/5
+        [Authorize(Roles = "Administrator,Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompany_info(int id)
         {

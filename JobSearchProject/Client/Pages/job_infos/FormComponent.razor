@@ -1,4 +1,6 @@
 ﻿@inject HttpClient _client
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <EditForm Model="@job_infos" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
@@ -8,51 +10,55 @@
         <div class="form-group">
             <label>job_Category: </label>
             <div>
-                <InputSelect @bind-Value="job_infos.job_Category" class="form-control">
+                <InputSelect @bind-Value="job_infos.job_CategoryId" class="form-control">
                     <option value="">-- Select Category --</option>
                     @if (job_Categorys != null)
                     {
                         foreach (var job_Category in job_Categorys)
                         {
-                            <option value="@job_Category.Id">@job_Category.category </option>
-                        }
+                            <option value="@job_Category.Id">@job_Category.category </option>                        
+                    }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => job_infos.job_Category)" />
+                <ValidationMessage For="@(() => job_infos.job_CategoryId)" />
             </div>
         </div>
 
         <div class="form-group">
             <label>Region: </label>
             <div>
-                <InputSelect @bind-Value="job_infos.job_location" class="form-control">
+                <InputSelect @bind-Value="job_infos.job_locationId" class="form-control">
                     <option value="">-- Select Region --</option>
                     @if (job_locations != null)
                     {
                         foreach (var job_Location in job_locations)
                         {
-                            <option value="@job_Location.Id">@job_Location.location_Name </option>
-                        }
+                            <option value="@job_Location.Id">@job_Location.location_Name </option>                        
+                    }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => job_infos.job_location)" />
+                <ValidationMessage For="@(() => job_infos.job_locationId)" />
             </div>
         </div>
 
         <div class="form-group">
             <label>Company: </label>
             <div>
-                <InputSelect @bind-Value="job_infos.company_info" class="form-control">
+                <InputSelect @bind-Value="job_infos.Company_infoId" class="form-control">
                     <option value="">-- Select Company --</option>
-                    @if (company_infos != null)
+                    @if (Company_infos != null)
                     {
-                        foreach (var company_Info in company_infos)
+                        foreach (var Company_info in Company_infos)
                         {
-                            <option value="@company_Info.Id">@company_Info.Name - @company_Info.Contact</option>
+
+                            if (Company_info.CreatedBy == _currentUserName)
+                            {
+                                <option value="@Company_info.Id">@Company_info.Name - @Company_info.Contact</option>                            
+                            }
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => job_infos.company_info)" />
+                <ValidationMessage For="@(() => job_infos.Company_infoId)" />
             </div>
         </div>
 
@@ -81,7 +87,7 @@
         </div>
 
         <div class="form-group">
-            <label>Date Out: </label>
+            <label>Type: </label>
             <div>
                 <InputText @bind-Value="@job_infos.type" class="form-control" />
                 <ValidationMessage For="@(() => job_infos.type)" />
@@ -89,7 +95,7 @@
         </div>
 
         <div class="form-group">
-            <label>Date Out: </label>
+            <label>Vacancy: </label>
             <div>
                 <InputDate @bind-Value="@job_infos.no_of_vacancy" class="form-control" />
                 <ValidationMessage For="@(() => job_infos.no_of_vacancy)" />
@@ -99,28 +105,59 @@
 
     @if (!Disabled)
     {
-        <button type="submit" class="btn btn-success btn-block">
-            @ButtonText
-        </button>
+<button type="submit" class="btn btn-success btn-block">
+    @ButtonText
+</button>
     }
     <BackToList Target="job_infos" />
 </EditForm>
 
-@code {
-    [Parameter] public bool Disabled { get; set; } = false;
+@code { [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public job_info job_infos { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
     private IList<job_Category> job_Categorys;
     private IList<job_location> job_locations;
-    private IList<Company_info> company_infos;
+    private IList<Company_info> Company_infos;
+
+
+    private List<AppUser> AppUsers;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string _currentUserId;
+    private string _currentUserName;
 
     protected async override Task OnInitializedAsync()
     {
         job_Categorys = await _client.GetFromJsonAsync<List<job_Category>>($"{Endpoints.Job_CategorysEndpoint}");
         job_locations = await _client.GetFromJsonAsync<List<job_location>>($"{Endpoints.Job_locationsEndpoint}");
-        company_infos = await _client.GetFromJsonAsync<List<Company_info>>($"{Endpoints.Company_infosEndpoint}");
+        Company_infos = await _client.GetFromJsonAsync<List<Company_info>>($"{Endpoints.Company_infosEndpoint}");
         //job_info.DateOut = DateTime.Now;
+        AppUsers = await
+    _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AccountsEndpoint}");
+        var authState = await
+        AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _claims = user.Claims;
+            _currentUserName = user.Identity.Name;
+            if (_claims.Count() > 0)
+            {
+                foreach (var claim in _claims)
+                {
+                    if (claim.Type == "sub")
+                    {
+                        _currentUserId = claim.Value;
+                        continue;
+                    }
+                    if (claim.Type == "name")
+                    {
+                        _currentUserName = claim.Value;
+                        continue;
+                    }
+                }
+            }
+        }
     }
-}
+    }

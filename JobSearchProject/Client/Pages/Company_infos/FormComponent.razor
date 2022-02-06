@@ -1,10 +1,12 @@
-﻿<EditForm Model="@Company_infos" OnValidSubmit="@OnValidSubmit">
+﻿
+
+<EditForm Model="@Company_infos" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Region: </label>
+            <label>Company Name: </label>
             <div>
                 <InputText @bind-Value="@Company_infos.Name" class="form-control" />
                 <ValidationMessage For="@(() => Company_infos.Name)" />
@@ -14,11 +16,10 @@
         <div class="form-group">
             <label>Mission: </label>
             <div>
-                <InputText @bind-Value="@Company_infos.Mission" class="form-control" />
+                <InputTextArea @bind-Value="@Company_infos.Mission" class="form-control" />
                 <ValidationMessage For="@(() => Company_infos.Mission)" />
             </div>
         </div>
-
         <div class="form-group">
             <label>Address: </label>
             <div>
@@ -38,16 +39,15 @@
 
     @if (!Disabled)
     {
-        <button type="submit" class="btn btn-success btn-block">
-            @ButtonText
-        </button>
-    }
-    <BackToList Target="Company_infos"/>
+<button type="submit" class="btn btn-success btn-block">
+    @ButtonText
+</button>}
+    <BackToList Target="Company_infos" />
 </EditForm>
 
-@code {
-    [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public Company_info Company_infos { get; set; }
-    [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public EventCallback OnValidSubmit { get; set; }
+@code { [Parameter] public bool Disabled { get; set; } = false;
+            [Parameter] public Company_info Company_infos { get; set; }
+            [Parameter] public string ButtonText { get; set; } = "Save";
+            [Parameter] public EventCallback OnValidSubmit { get; set; }
+
 }

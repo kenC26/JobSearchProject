@@ -11,9 +11,7 @@ namespace JobSearchProject.Shared.Domain
         
         public string Name { get; set; }
         public DateTime TimeUpload { get; set; }
-        public int ApplicantId { get; set; }
-        public virtual applicant_info Applicant_info { get; set; }
-        public int JobId { get; set; }
+        public int? job_infoId { get; set; }
         public virtual job_info Job_info { get; set; }
 
 

@@ -24,8 +24,8 @@ namespace JobSearchProject.Server.Data
         public DbSet<job_location> job_locations { get; set; }
         public DbSet<Company_info> Company_Infos { get; set; }
 
-        public DbSet<applicant_info> applicant_Infos { get; set; }
         public DbSet<ApplicantDetail> ApplicantDetails{ get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
