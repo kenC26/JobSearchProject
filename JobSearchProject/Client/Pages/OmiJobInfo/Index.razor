@@ -1,0 +1,79 @@
+﻿@page "/Omijob_infos/"
+@using Microsoft.AspNetCore.Authorization
+
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<h3 class="card-title">job_infos</h3>
+<br />
+@if (job_infos == null)
+{
+    <div class="alert alert-info">Loading job_infos...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>description</th>
+                <th>Salary</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Company Info</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job_info in job_infos)
+            {
+            <tr>
+                <td>@job_info.job_title</td>
+                <td>@job_info.job_description</td>
+                <td>@job_info.job_salary</td>
+                <td>@job_info.type</td>
+                <td>@job_info.job_locationId</td>
+                <td>@job_info.job_CategoryId</td>
+                <td>@job_info.Company_infoId</td>
+                <td>
+                    <a href="/job_infos/view/@job_info.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/job_infos/edit/@job_info.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(job_info.Id))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    private List<job_info> job_infos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
+    }
+
+    async Task Delete(int job_infoId)
+    {
+        var job_info = job_infos.First(q => q.Id == job_infoId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {job_info.Id}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"api/job_infos/{job_infoId}");
+            await OnInitializedAsync();
+        }
+    }
+}
+
