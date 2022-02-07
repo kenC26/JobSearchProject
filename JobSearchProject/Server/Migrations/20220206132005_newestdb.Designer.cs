@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JobSearchProject.Server.Data.Migrations
+namespace JobSearchProject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220112032208_Themostnewdata")]
-    partial class Themostnewdata
+    [Migration("20220206132005_newestdb")]
+    partial class newestdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,6 +136,9 @@ namespace JobSearchProject.Server.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -143,10 +146,7 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -154,6 +154,9 @@ namespace JobSearchProject.Server.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -182,6 +185,12 @@ namespace JobSearchProject.Server.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("qualification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("salary")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -199,17 +208,17 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3c1e470-2951-4705-bc9f-8a6472775d75",
+                            ConcurrencyStamp = "192ed735-50aa-4363-87e2-d87cd00facef",
+                            DOB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
-                            FirstName = "Admin",
-                            LastName = "User",
                             LockoutEnabled = false,
+                            Name = "AdminUser",
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN1q3EC3ErnDPZHEM5vcjVr+S4oY4nD980Vmj+ihWWw0+PdiYdwS0Gk/ni687zk4Eg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEImLO3n+O+nThemMCBm9kzoFWxUW2bq8Pr6WO3yIkLjnE5onRcjIsozG/qJSQdnYQQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5a4f269f-54b3-435f-879b-e3091ebe04db",
+                            SecurityStamp = "e0cfc07f-cfbc-4140-becc-120e5955532e",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -222,12 +231,6 @@ namespace JobSearchProject.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicantId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Applicant_infoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -236,12 +239,6 @@ namespace JobSearchProject.Server.Data.Migrations
 
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Job_infoId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -252,11 +249,12 @@ namespace JobSearchProject.Server.Data.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("job_infoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Applicant_infoId");
-
-                    b.HasIndex("Job_infoId");
+                    b.HasIndex("job_infoId");
 
                     b.ToTable("ApplicantDetails");
                 });
@@ -302,8 +300,8 @@ namespace JobSearchProject.Server.Data.Migrations
                             Id = 1,
                             Address = "North Bridge Road",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 526, DateTimeKind.Local).AddTicks(3341),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(5029),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 645, DateTimeKind.Local).AddTicks(8680),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 648, DateTimeKind.Local).AddTicks(7513),
                             Mission = "provides innovative financial services that meet their needs",
                             Name = "OCBC",
                             UpdatedBy = "System"
@@ -313,8 +311,8 @@ namespace JobSearchProject.Server.Data.Migrations
                             Id = 2,
                             Address = "1 TAMPINES NORTH DRIVE",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7208),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7218),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 648, DateTimeKind.Local).AddTicks(9163),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 648, DateTimeKind.Local).AddTicks(9171),
                             Mission = "Provide Our Clients with Valued Added Services and Solutions",
                             Name = "TECHTIMIA ENGINEERING PTE LTD",
                             UpdatedBy = "System"
@@ -324,60 +322,12 @@ namespace JobSearchProject.Server.Data.Migrations
                             Id = 3,
                             Address = "90 Yishun Central",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7222),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 528, DateTimeKind.Local).AddTicks(7224),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 648, DateTimeKind.Local).AddTicks(9256),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 648, DateTimeKind.Local).AddTicks(9257),
                             Mission = "Provide good quality, affordable and hassle-free healthcare ",
                             Name = "kHOO TECH PUAT",
                             UpdatedBy = "System"
                         });
-                });
-
-            modelBuilder.Entity("JobSearchProject.Shared.Domain.applicant_info", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_Contact")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_qualification")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_salary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("applicant_username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("applicant_Infos");
                 });
 
             modelBuilder.Entity("JobSearchProject.Shared.Domain.job_Category", b =>
@@ -411,8 +361,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9243),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9259),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 651, DateTimeKind.Local).AddTicks(4013),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 651, DateTimeKind.Local).AddTicks(4023),
                             UpdatedBy = "System",
                             category = "Engineering"
                         },
@@ -420,8 +370,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9267),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9271),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 651, DateTimeKind.Local).AddTicks(4028),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 651, DateTimeKind.Local).AddTicks(4029),
                             UpdatedBy = "System",
                             category = "Business"
                         },
@@ -429,8 +379,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9274),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(9277),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 651, DateTimeKind.Local).AddTicks(4032),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 651, DateTimeKind.Local).AddTicks(4033),
                             UpdatedBy = "System",
                             category = "Healthcare"
                         });
@@ -443,6 +393,9 @@ namespace JobSearchProject.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("Company_infoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -454,9 +407,6 @@ namespace JobSearchProject.Server.Data.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("company_infoId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("job_CategoryId")
                         .HasColumnType("int");
@@ -481,7 +431,7 @@ namespace JobSearchProject.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("company_infoId");
+                    b.HasIndex("Company_infoId");
 
                     b.HasIndex("job_CategoryId");
 
@@ -494,8 +444,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9679),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9695),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 652, DateTimeKind.Local).AddTicks(550),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 652, DateTimeKind.Local).AddTicks(559),
                             UpdatedBy = "System",
                             job_description = "",
                             job_salary = "0.00",
@@ -507,8 +457,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9705),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 532, DateTimeKind.Local).AddTicks(9708),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 652, DateTimeKind.Local).AddTicks(565),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 652, DateTimeKind.Local).AddTicks(566),
                             UpdatedBy = "System",
                             job_description = "",
                             job_salary = "0.00",
@@ -549,8 +499,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1528),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1556),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 650, DateTimeKind.Local).AddTicks(8986),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 650, DateTimeKind.Local).AddTicks(9002),
                             UpdatedBy = "System",
                             location_Name = ""
                         },
@@ -558,8 +508,8 @@ namespace JobSearchProject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1564),
-                            DateUpdated = new DateTime(2022, 1, 12, 11, 22, 7, 531, DateTimeKind.Local).AddTicks(1566),
+                            DateCreated = new DateTime(2022, 2, 6, 21, 20, 3, 650, DateTimeKind.Local).AddTicks(9008),
+                            DateUpdated = new DateTime(2022, 2, 6, 21, 20, 3, 650, DateTimeKind.Local).AddTicks(9009),
                             UpdatedBy = "System",
                             location_Name = ""
                         });
@@ -595,14 +545,14 @@ namespace JobSearchProject.Server.Data.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "657b853a-c570-4cfb-a569-b09c63187aa5",
+                            ConcurrencyStamp = "c0f56f11-57b7-408e-b1c4-c2cc2c2e107f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "ec8e5e2a-219c-4bc1-980d-fe2b94cb8d2e",
+                            ConcurrencyStamp = "83233170-99d6-445e-8741-02f5a20705fc",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -725,15 +675,9 @@ namespace JobSearchProject.Server.Data.Migrations
 
             modelBuilder.Entity("JobSearchProject.Shared.Domain.ApplicantDetail", b =>
                 {
-                    b.HasOne("JobSearchProject.Shared.Domain.applicant_info", "Applicant_info")
-                        .WithMany()
-                        .HasForeignKey("Applicant_infoId");
-
                     b.HasOne("JobSearchProject.Shared.Domain.job_info", "Job_info")
                         .WithMany()
-                        .HasForeignKey("Job_infoId");
-
-                    b.Navigation("Applicant_info");
+                        .HasForeignKey("job_infoId");
 
                     b.Navigation("Job_info");
                 });
@@ -742,7 +686,7 @@ namespace JobSearchProject.Server.Data.Migrations
                 {
                     b.HasOne("JobSearchProject.Shared.Domain.Company_info", "company_info")
                         .WithMany()
-                        .HasForeignKey("company_infoId");
+                        .HasForeignKey("Company_infoId");
 
                     b.HasOne("JobSearchProject.Shared.Domain.job_Category", "job_Category")
                         .WithMany()

@@ -10,18 +10,11 @@
 <AuthorizeView Roles="Administrator,User">
     <a href="/applicantDetails/create" class="btn btn-secondary">
         <span class="oi oi-plus"></span>
-        Create New applicantDetail
+        Create New Applicant Detail
     </a>
 </AuthorizeView>
     <br />
     <br />
-
-<a href="/applicantDetails/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Job Applicant Detail
-</a>
-<br />
-<br />
 
     @if (applicantDetails == null)
     {
@@ -70,7 +63,7 @@
                             }
 
                 }
-                }
+                
             </tbody>
         </table>
     }

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CarRentalManagement.Server.Controllers
 {
-    [Authorize(Roles = "Administrator,Admin,User")]
+    //[Authorize(Roles = "Administrator,Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
