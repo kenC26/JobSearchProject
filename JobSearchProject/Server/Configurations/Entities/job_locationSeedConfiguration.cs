@@ -17,7 +17,7 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new job_location
                 {
                     Id = 1,
-                    location_Name = "",
+                    location_Name = "Bishan",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
@@ -26,7 +26,7 @@ namespace JobSearchProject.Server.Configurations.Entities
                 new job_location
                 {
                     Id = 2,
-                    location_Name = "",
+                    location_Name = "Punggol",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",

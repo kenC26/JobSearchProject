@@ -1,0 +1,84 @@
+﻿@page "/OmiCompany_infos/"
+@inject HttpClient _client
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+<h3 class="card-title">Company Information</h3>
+<br />
+
+    <br />
+    <br />
+    @if (Company_infos == null)
+    {
+        <div class="alert alert-info">Loading Company infos....</div> }
+    else
+    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Mission</th>
+                    <th>Contact</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Company_info in Company_infos)
+                {
+
+
+
+                    <tr>
+                        <td>@Company_info.Name</td>
+                        <td>@Company_info.Address</td>
+                        <td>@Company_info.Mission</td>
+                        <td>@Company_info.Contact</td>
+                        <td>
+                            <a href="/Company_infos/view/@Company_info.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/Company_infos/edit/@Company_info.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(Company_info.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+
+                
+
+                }
+            </tbody>
+
+        </table>
+    }
+    @code { private List<Company_info> Company_infos;
+
+
+        protected async override Task OnInitializedAsync()
+        {
+           
+
+            Company_infos = await _client.GetFromJsonAsync<List<Company_info>>($"{Endpoints.Company_infosEndpoint}");
+        }
+        async Task Delete(int Company_infoId)
+        {
+            var Company_info = Company_infos.First(q => q.Id == Company_infoId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Company_info.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.Company_infosEndpoint}/{Company_infoId}");
+                await OnInitializedAsync();
+            }
+        }
+
+        public void Dispose()
+        {
+            js.InvokeVoidAsync("DataTablesDispose", "#Company_infosTable");
+        }
+    }

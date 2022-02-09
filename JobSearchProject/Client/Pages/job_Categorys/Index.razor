@@ -4,81 +4,72 @@
 @attribute [Authorize]
 
 <style>
-    h3 {
-        text-align: center;
-        font-size: 200%;
-    }
-
     img {
         max-width: 50%;
         max-height: 50%;
         display: inline-block;
         border: 5px solid #555;
     }
-
-    .box.small2 {
-        height: 50px;
-    }
 </style>
 <h3 class="card-title">Job Category</h3>
 <br />
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <div class=" box-small2">
-                <img src="/images/engineering.jpg">
-                <img src="/images/business.jpg">
-                <img src="/images/healthcare.png">
-            </div>
-        </div>
-        <div class="col-sm">
             <a href="/job_Categorys/create" class="btn btn-secondary">
                 <span class="oi oi-plus"></span>
                 Create New Category
             </a>
             <br />
             <br />
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Engineering</th>
+                        <th>Business</th>
+                        <th>Healthcare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="/images/engineering.jpg"> </td>
+                        <td><img src="/images/business.jpg"> </td>
+                        <td><img src="/images/healthcare.png"></td>
+                    </tr>
+                </tbody>
+            </table>
             @if (job_Categorys == null)
             {
-                <div class="alert alert-info">Loading job_Categories....</div>
-            }
-            else
-            {
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var job_Category in job_Categorys)
-                        {
-                            <tr>
-                                <td>@job_Category.category</td>
-                                <td>
-                                    <a href="/job_Categorys/view/@job_Category.Id" class="btn btn-primary">
-                                        <span class="oi oi-book"></span>
-                                    </a>
-                                    <a href="/job_Categorys/edit/@job_Category.Id" class="btn btn-warning">
-                                        <span class="oi oi-pencil"></span>
-                                    </a>
-                                    <button class="btn btn-danger" @onclick="@(()=>Delete(job_Category.Id))">
-                                        <span class="oi oi-delete"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+        <div class="alert alert-info">Loading job_Categories....</div> }
+                    else
+                    {
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job_Category in job_Categorys)
+                {
+        <tr>
+            <td>@job_Category.category</td>
+            <td>
+                <AuthorizeView Roles="Administrator,Admin">
+                    <a href="/job_Categorys/view/@job_Category.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/job_Categorys/edit/@job_Category.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(job_Category.Id))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </AuthorizeView>
+            </td>
+        </tr>}
+            </tbody>
+        </table>            
+        }
 
-                </table>
-            }
-            <form>
-                <input type="button" value="Go Back" onclick="history.back()">
-            </form>
-        </div>
-    </div>
-</div>
 @code {
     private List<job_Category> job_Categorys;
 

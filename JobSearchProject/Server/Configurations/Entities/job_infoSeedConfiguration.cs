@@ -13,40 +13,7 @@ namespace JobSearchProject.Server.Configurations.Entities
         public void Configure(EntityTypeBuilder<job_info> builder)
         {
 
-            builder.HasData(
-                new job_info
-                {
-                    Id = 1,
-                    job_title = "",
-                    job_description = "",
-                    job_salary = "0.00",
-                    no_of_vacancy = 0,
-                    type = "",
-                    //job_Category = job_Category.category,
-                    //job_location = job_CategorySeedConfiguration,
-                    //company_info = job_CategorySeedConfiguration,
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
-                },
-                new job_info
-                {
-                    Id = 2,
-                    job_title = "",
-                    job_description = "",
-                    job_salary = "0.00",
-                    no_of_vacancy = 0,
-                    type = "",
-                    //job_Category = "",
-                    //job_location = "",
-                    //company_info = "",
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
-                }
-            );
+            
 
         }
     }

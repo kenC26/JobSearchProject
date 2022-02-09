@@ -18,6 +18,11 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="history.back()" >
+                <span class="oi oi-media-step-backward" aria-hidden="true"></span> Go Back
+            </NavLink>
+        </li>
         <AuthorizeView>
             <Authorized>
                 <li class="nav-item px-3">
@@ -63,12 +68,32 @@
                 <NavLink class="nav‐link" href="accounts/">
                     <span class="oi oi-person" aria‐hidden="true"></span> Accounts
                 </NavLink>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/Company_infos">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Company Information
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/job_infos">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Job Information
+                </NavLink>
+            </li>
             </li>
         </AuthorizeView>
         <AuthorizeView Roles="Administrator,User">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="/applicantDetails">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Applicant
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/OmiCompany_infos" Match="NavLinkMatch.All">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> All Companies
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/Omijob_infos" Match="NavLinkMatch.All">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> All Job Info
                 </NavLink>
             </li>
         </AuthorizeView>
@@ -81,16 +106,6 @@
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="/job_locations">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Job Region
-                </NavLink>
-            </li>
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="/Company_infos">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Company Information
-                </NavLink>
-            </li>
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="/job_infos">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Job Information
                 </NavLink>
             </li>
         </AuthorizeView>

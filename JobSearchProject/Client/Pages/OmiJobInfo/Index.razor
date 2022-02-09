@@ -1,0 +1,90 @@
+﻿@page "/Omijob_infos/"
+@using Microsoft.AspNetCore.Authorization
+
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<h3 class="card-title">job_infos</h3>
+<br />
+@if (job_infos == null)
+{
+    <div class="alert alert-info">Loading job_infos...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>description</th>
+                <th>Salary</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Company Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job_info in job_infos)
+            {
+            <tr>
+                <td>@job_info.job_title</td>
+                <td>@job_info.job_description</td>
+                <td>@job_info.job_salary</td>
+                <td>@job_info.type</td>
+                @foreach (var job_location in job_locations)
+                {
+                    if (job_info.job_locationId == job_location.Id)
+                    {<td>@job_location.location_Name</td>}
+                }
+                @foreach (var job_Category in job_Categorys)
+                {
+                    if (job_info.job_CategoryId == job_Category.Id)
+                    { <td>@job_Category.category</td>}
+                }
+                @foreach (var Company_info in Company_infos)
+                {
+                    if (job_info.Company_infoId == Company_info.Id)
+                    {<td>@Company_info.Name</td>}
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    private List<job_info> job_infos;
+    private IList<job_Category> job_Categorys;
+    private IList<job_location> job_locations;
+    private IList<Company_info> Company_infos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        job_infos = await _client.GetFromJsonAsync<List<job_info>>($"{Endpoints.Job_infosEndpoint}");
+        job_Categorys = await _client.GetFromJsonAsync<List<job_Category>>($"{Endpoints.Job_CategorysEndpoint}");
+        job_locations = await _client.GetFromJsonAsync<List<job_location>>($"{Endpoints.Job_locationsEndpoint}");
+        Company_infos = await _client.GetFromJsonAsync<List<Company_info>>($"{Endpoints.Company_infosEndpoint}");
+    }
+    async Task D(int job_infoId)
+    {
+        var job_Category = job_Categorys.First(q => q.Id == job_infoId);
+             await _client.DeleteAsync($"api/job_Categorys/{job_infoId}");
+
+    }
+    async Task Delete(int job_infoId)
+    {
+        var job_info = job_infos.First(q => q.Id == job_infoId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {job_info.Id}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"api/job_infos/{job_infoId}");
+            await OnInitializedAsync();
+        }
+    }
+}
+
